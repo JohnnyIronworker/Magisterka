@@ -309,6 +309,7 @@ Historycznie rzecz biorąc modele dyskretne, swoje pochodzenie wywodzą z makroe
 \begin{equation}
 P(X_{t_1}, X_{t_2}, ..., X_{t_n}) = P(X_{t_1 + \tau}, X_{t_2 + \tau}, ..., X_{t_n + \tau})
 \end{equation}
+
 Tak więc powyższe równanie można odczytać że, proces jest silnie stacjonarny wtedy kiedy jego wspólny rozkład prawdopodobieństwa nie zmienia się w czasie. Słaba stacjonarność (kowariancyjna stacjonarność) występuje wtedy kiedy wartość oczekiwana i wariancja jest stała w czasie, jednakże kowariancja jest funkcją różnicy między momentami czasowymi. Proces stochastyczny \( \{X_t\} \) jest słabo stacjonarny, jeśli spełnia następujące warunki:
 
 \begin{enumerate}
@@ -449,11 +450,14 @@ Model ARIMA jest więc kombinacją trzech podstawowych elementów:
     \item \textbf{Różnicowanie (I):} Różnicowanie szeregu w celu uzyskania stacjonarności.
     \item \textbf{Średnia Ruchoma (MA):} Zależność między obecną wartością a błędami z poprzednich kroków czasowych.
 \end{enumerate}
-Do estymacji modeli autoregresyjnych najczęściej wykorzystuje się popularną metodę MNK (Metoda Najmniejszych Kwadratów), bądź też poprzez: MNW (Metoda Największej Wiarygodności), równania Yule'a-Walkera czy metody bayesowskie.
 
+\setlength{\parindent}{20pt} % Przywróć domyślne wcięcie
+Do estymacji modeli autoregresyjnych najczęściej wykorzystuje się popularną metodę MNK (Metoda Najmniejszych Kwadratów), bądź też poprzez: MNW (Metoda Największej Wiarygodności), równania Yule'a-Walkera czy metody bayesowskie.
 W kontekście danych finansowych warto tutaj nadmienić że często obserwowanym zjawiskiem w stopach zwrotu jest to, kiedy funkcja autokorelacji nagle skokowo odwołuje się do przeszłości. Nawet wtedy kiedy szereg jest stacjonarny. Wtedy pomocna może być technika frakcyjnego różnicowania. Metoda ta polega na tym, że parametr d w modelu ARIMA(p, d, q) (równanie numer 1.38) jest liczbą \(\mathbb{R} \)  w zakresie od -1 do 1. Wtedy model taki nosi nazwę ARFIMA (ang. \textit{Autoregressive Fractionally Integrated Moving Average}).
 
-Modelowanie stóp zwrotu nie jest wcale zadaniem łatwym, dane finansowe mają to do siebie że występuje w nich mocna i widoczna heteroskedastyczność oraz grupowanie zmienności (ang. \textit{voltality clusters})\footnote{M. Doman, R. Doman, \textit{Modelowanie zmienności i ryzyka - metody ekonometrii finansowej}, Kraków 2009, s. 29-30}, oznacza to, że wariancja w czasie nie jest stała. Obrazując to na przykładzie, w szeregach czasowych mówimy o heteroskedastyczności, gdy wariancja błędów losowych zmienia się w czasie. Formalnie, dla szeregu czasowego \( \{X_t\} \) z modelem
+
+Modelowanie stóp zwrotu nie jest wcale zadaniem łatwym, dane finansowe mają to do siebie że występuje w nich mocna i widoczna heteroskedastyczność oraz grupowanie zmienności (ang. \textit{voltality clusters})\footnote{M. Doman, R. Doman, \textit{Modelowanie zmienności i ryzyka - metody ekonometrii finansowej}, Kraków 2009, s. 29-30}, oznacza to, że wariancja w czasie nie jest stała. Obrazując to na przykładzie, w szeregach czasowych mówimy o heteroskedastyczności, gdy wariancja błędów losowych zmienia się w czasie. Formalnie, dla szeregu czasowego \( \{X_t\} \) z modelem:
+
 \begin{equation}
 X_t = \mu_t + \varepsilon_t,
 \end{equation}
@@ -626,6 +630,7 @@ W tym podrozdziale opisałem główne dyskretne modele opisu podstawowych cech j
 
 W ostatnich latach jesteśmy świadkami wzrostu znaczenia sztucznej inteligencji w życiu codziennym. Przyczyn tego zjawiska jest wiele, przede wszystkim wiąże się ono z sukcesem implementacji modeli językowych w ramach aplikacji sieciowych takich jak ChatGPT z OpenAI. Która pozwala użytkownikom na całym świecie w różnych językach, otrzymywać odpowiedzi do zapytań stawianych przez użytkowników. Wraz z tym (nie da się ukryć) postępem mnożyły się różne niekiedy absurdalne hipotezy, czym to rzekomo nie jest sztuczna inteligencja. Niemal niekiedy wręcz dochodziło do mylenia samoświadomości z automatem predykcyjnym (czym w istocie jest tzw. sztuczna inteligencja), przez wszelakie indywidua nie wiedzące czym to jest. W konsekwencji internet jest pełen fałszywych autorytetów które pod płaszczem rzekomej nauki, propagowały i nakręcały paranoje społeczną związaną z tzw. sztuczną inteligencją. 
 Żeby zrozumieć na czym tak naprawdę to wszystko polega, trzeba przebrnąć przez matematykę która się za tym kryje. Najpierw zdefiniujmy pole wektorowe które jest podstawową przestrzenią miar, w tych systemach. 
+
 \begin{equation}
 \mathbf{F}(x, y, z) = P(x, y, z) \mathbf{i} + Q(x, y, z) \mathbf{j} + R(x, y, z) \mathbf{k}
 \end{equation}
@@ -915,9 +920,172 @@ Cały proces jest powtarzany do momentu aż interesujące nas mierniki (np. F1, 
     \end{align*}
 \end{enumerate}
 \label{subsec:podrozdzial-2-rzedu}
-Zasadniczo co może się wydawać zaskoczeniem, jedną z pierwszych aplikacji sieci neuronowych było właśnie modelowanie rynków kapitałowych, już w latach 90 około 3 lata po odkryciu algorytmu propagacji wstecznej przez Yana LeCuna. A więc te metody wcale nie są innowatorskie na tej płaszczyźnie. Jest to kompletnie odmienne podejście, od tych które prezentowałem w poprzednich podrozdziałach, jednakże posiadające również silny potencjał prognostyczny. W kontekście modelowania zmienności cen aktywów, interesować nas będzie specyficzny rodzaj sieci neuronowych dedykowany dla szeregów czasowych. Konkretnie chodzi tu o Rekurencyjne Sieci Neuronowe (RNN), które poza pewnymi szczegółami w ogólności działają tak samo jak klasyczna sieć neuronowa. W tym sensie, że parametry również podlegają propagacji wstecznej, a argumenty są funkcją wyników poprzednich warstw. 
-Teraz omówmy pojęcie rekurencyjnych sieci neuronowych
+Opisane przeze mnie metody uczenia sieci neuronowych mają charakter uniwersalny i mogą być stosowane do różnych typów sieci. Rysunek 1.3 prezentuje działanie sieci MLP (multilayer perceptron), która jest klasyczną siecią wykorzystywaną w prostych zagadnieniach klasyfikacji i regresji. W praktyce finansowej, w przypadku szeregów wielowymiarowych, stosuje się bardziej skomplikowane architektury sztucznej inteligencji, oparte na hybrydowym działaniu konwolucyjnych i rekurencyjnych sieci neuronowych. 
+
+  Sieć konwolucyjna (ang. convolutional neural network, CNN)
+ jest typem sieci której działanie polega na wielokrotnej ekstrakcji wielowymiarowych cech wejściowych z macierzy bądź tensorów, a następnie ustalenia ich hierarchi w zależności od prognozowanego celu.
+Architektura tego mechanizmu składa się z trzech głównych typów warstw: 
+kowolucyjnych, poolingowych oraz w pełni połączonych. Rozważmy wielowymiarowy szereg finansowy $F$ reprezentowany jako tensor o wymiarach $(T, V)$, gdzie $T$ to liczba kroków czasowych, a $V$ to liczba zmiennych finansowych. Filtr konwolucyjny dla takich danych może być reprezentowany jako tensor $K$ o wymiarach $(M, N)$, gdzie $M \leq T$ i $N \leq V$ oznaczają rozmiar filtru w krokach czasowych i zmiennych finansowych odpowiednio.
+
+Operacja konwolucji dla wielowymiarowych szeregów finansowych jest opisana jako:
+$$
+(S * K)(t, c) = \sum_{m}\sum_{n} F(t-m, c-n) \cdot K(m, n)
+$$
+
+gdzie:
+- $(t, c)$ to współrzędne w wynikowej macierzy cech,
+- $S$ to macierz cech po konwolucji,
+- $K$ to filtr konwolucyjny o rozmiarze $M \times N$, z $M \leq T$ i $N \leq C$,
+- $F(t-m, c-n)$ to wartość w szeregu finansowym na pozycji $(t-m, c-n)$,
+- $K(m, n)$ to wartość w filtrze konwolucyjnym na pozycji $(m, n)$.
+
+Ta operacja pozwala na wykrywanie lokalnych wzorców w danych finansowych, takich jak nagłe zmiany ceny czy typowe formacje świecowe.
+Po zastosowaniu konwolucji, możemy również wprowadzić warstwy pooling, aby zredukować wymiarowość danych i podkreślić najważniejsze cechy.
+Na końcu, w pełni połączone warstwy (fully-connected layers) mogą być użyte do przewidywania, na przykład kierunku zmiany ceny na podstawie wyekstrahowanych cech.
+Opis działania sieci CNN, jest tematem nie jednego doktoratu z matematyki i informatyki, dlatego też po więcej informacji można sięgnąć do pozycji autorstwa Geron'a czy Chollet'a.
+Generalnie sieci te są szczególnie popularne w rozpoznawaniu obrazów, ze względu na reprezentacje pikseli w formie tensorowej z naturalnie różną 
+hierarchią warstw. 
+
+Sieci typu LSTM (ang. Long-Short Time Memory) są ulepszoną wersją sieci rekurencyjnych, gdzie nie ma już problemu
+znikającego i eksplodującego gradientu charakterystycznego dla zwykłych RNN. W pewnym sensie działają one troszkę podobnie do modelu autoregresyjnego, 
+z tym że w tych sieciach mamy znacznie bardziej skomplikowany charakter zarządzania tzw. pamięcią krótką i długą. Ten algorytm jest bardzo popularny w
+analizie jednowymiarowych finansowych szeregów czasowych, ze względu na lepszy stopień kontroli nad przepływem danych w stosunku na przykład do modelu AR. Z drugiej strony zaś, wymaga znacznie większego zarządzania algorytmem i jego topologią w stosunku do modelu AR, którego czasem nadmierna prostota jest największą zaletą.  
+Poniżej znajduje się ilustracja wraz ze wzorami opisującymi działanie LSTM.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  % GLOBALNE USTAWIENIA
+  font=\sf \scriptsize,
+  >=LaTeX,
+  % Style
+  cell/.style={% Dla głównego bloku
+      rectangle, 
+      rounded corners=5mm, 
+      draw,
+      very thick,
+      },
+  operator/.style={% Dla operatorów takich jak + i x
+      circle,
+      draw,
+      inner sep=-0.5pt,
+      minimum height =.2cm,
+      },
+  function/.style={% Dla funkcji
+      ellipse,
+      draw,
+      inner sep=1pt
+      },
+  ct/.style={% Dla zewnętrznych wejść i wyjść
+      circle,
+      draw,
+      line width = .75pt,
+      minimum width=1cm,
+      inner sep=1pt,
+      },
+  gt/.style={% Dla wewnętrznych wejść
+      rectangle,
+      draw,
+      minimum width=4mm,
+      minimum height=3mm,
+      inner sep=1pt
+      },
+  mylabel/.style={% Nowy styl dla etykiet
+      font=\scriptsize\sffamily
+      },
+  ArrowC1/.style={% Strzałki z zaokrąglonymi rogami
+      rounded corners=.25cm,
+      thick,
+      },
+  ArrowC2/.style={% Strzałki z dużymi zaokrąglonymi rogami
+      rounded corners=.5cm,
+      thick,
+      },
+  ]
+
+% Rozpoczęcie rysowania...
+  % Rysowanie komórki: 
+  \node [cell, minimum height =4cm, minimum width=6cm] at (0,0){} ;
+
+  % Rysowanie wejść o nazwach ibox#
+  \node [gt] (ibox1) at (-2,-0.75) {$\sigma$};
+  \node [gt] (ibox2) at (-1.5,-0.75) {$\sigma$};
+  \node [gt, minimum width=1cm] (ibox3) at (-0.5,-0.75) {Tanh};
+  \node [gt] (ibox4) at (0.5,-0.75) {$\sigma$};
+
+  % Rysowanie operatorów o nazwach mux#, add# i func#
+  \node [operator] (mux1) at (-2,1.5) {$\times$};
+  \node [operator] (add1) at (-0.5,1.5) {+};
+  \node [operator] (mux2) at (-0.5,0) {$\times$};
+  \node [operator] (mux3) at (1.5,0) {$\times$};
+  \node [function] (func1) at (1.5,0.75) {Tanh};
+
+  % Rysowanie zewnętrznych wejść, oznaczonych jako c,h,x
+  \node[ct, label={[mylabel]Komórka}] (c) at (-4,1.5) {$c_{t-1}$};
+  \node[ct, label={[mylabel]Ukryta}] (h) at (-4,-1.5) {$h_{t-1}$};
+  \node[ct, label={[mylabel]left:Wejście}] (x) at (-2.5,-3) {$x_{t}$};
+
+  % Rysowanie zewnętrznych wyjść, oznaczonych jako c2,h2,x2
+  \node[ct, label={[mylabel]Komórka}] (c2) at (4,1.5) {$c_{t}$};
+  \node[ct, label={[mylabel]Ukryta}] (h2) at (4,-1.5) {$h_{t}$};
+  \node[ct, label={[mylabel]left:Wyjście}] (x2) at (2.5,3) {$h_{t}$};
+
+  % Łączenie wszystkiego
+      % Przecięcia i przesunięcia są używane do rysowania strzałek
+      \draw [ArrowC1] (c) -- (mux1) -- (add1) -- (c2);
+  
+      % Wejścia
+      \draw [ArrowC2] (h) -| (ibox4);
+      \draw [ArrowC1] (h -| ibox1)++(-0.5,0) -| (ibox1); 
+      \draw [ArrowC1] (h -| ibox2)++(-0.5,0) -| (ibox2);
+      \draw [ArrowC1] (h -| ibox3)++(-0.5,0) -| (ibox3);
+      \draw [ArrowC1] (x) -- (x |- h)-| (ibox3);
+  
+      % Wewnętrzne połączenia
+      \draw [->, ArrowC2] (ibox1) -- (mux1);
+      \draw [->, ArrowC2] (ibox2) |- (mux2);
+      \draw [->, ArrowC2] (ibox3) -- (mux2);
+      \draw [->, ArrowC2] (ibox4) |- (mux3);
+      \draw [->, ArrowC2] (mux2) -- (add1);
+      \draw [->, ArrowC1] (add1 -| func1)++(-0.5,0) -| (func1);
+      \draw [->, ArrowC2] (func1) -- (mux3);
+  
+      % Wyjścia
+      \draw [-, ArrowC2] (mux3) |- (h2);
+      \draw (c2 -| x2) ++(0,-0.1) coordinate (i1);
+      \draw [-, ArrowC2] (h2 -| x2)++(-0.5,0) -| (i1);
+      \draw [-, ArrowC2] (i1)++(0,0.2) -- (x2);
+  
+  \end{tikzpicture}
+  \caption{Schemat przykładowej sieci neuronowej.}
+  \label{fig:neural_network}
+  \end{figure}
+  Na schemacie zilustrowano działanie komórki sieci rekurencyjnej z bramkami (na przykład LSTM lub GRU), która jest stosowana do przetwarzania danych sekwencyjnych. Oto szczegółowy opis poszczególnych elementów:
+
+  \begin{description}
+    \item[$\sigma$] Bramka sigmoidalna, ograniczająca wartości wyjściowe do przedziału (0, 1), decydująca o przepuszczeniu informacji.
+    
+    \item[Tanh] Hiperboliczna funkcja tangens, ograniczająca wartości do przedziału (-1, 1), stosowana do normalizacji wartości wyjściowych.
+    
+    \item[$\times$] Operator mnożenia element po elemencie, stosowany do filtrowania i regulowania przepływu informacji w sieci.
+    
+    \item[$+$] Operator dodawania, używany do łączenia informacji z różnych ścieżek przetwarzania.
+    
+    \item[$c_{t-1}$] Stan komórki w poprzednim kroku czasowym, przechowujący informacje z przeszłości, które są istotne dla aktualnego stanu sieci.
+    
+    \item[$h_{t-1}$] Stan ukryty sieci w poprzednim kroku czasowym, zawierający skompresowaną historię przetworzonych dotąd informacji.
+    
+    \item[$x_{t}$] Dane wejściowe dla sieci w chwili \(t\), mogące reprezentować nową wartość w sekwencji danych.
+    
+    \item[$c_{t}$] Aktualizowany stan komórki, wynik przetwarzania aktualnych danych wejściowych \(x_{t}\) oraz poprzedniego stanu komórki \(c_{t-1}\) i stanu ukrytego \(h_{t-1}\).
+    
+    \item[$h_{t}$] Nowy stan ukryty generowany na podstawie aktualizowanego stanu komórki \(c_{t}\) i poprzedniego stanu ukrytego \(h_{t-1}\), służący do przekazania informacji do kolejnego kroku czasowego lub do warstwy wyjściowej sieci.
+  \end{description}
+Generalnie sieć LSTM działa poprzez sekwencyjne przetwarzanie danych, efektywnie zarządzając informacjami na długie i krótkie odstępy czasu za pomocą specjalnych struktur zwanych bramkami, które decydują o tym, które informacje należy zachować, przekazać dalej lub odrzucić, umożliwiając modelowi uniknięcie problemów z zanikającym gradientem i zapamiętywanie zależności w danych przez długie sekwencje.
+  
+  
 \section{Sterowanie stochastyczne}
+\par
+\indent To jest akapit z wymuszonym wcięciem.
 \section{Arbitraż statystyczny}
 \section{Teoria optymalizacji portfela}
 
